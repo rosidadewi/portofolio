@@ -2,7 +2,7 @@ export const projects = [
   {
     title: 'To-Do List App',
     desc: 'Membangun dashboard produktivitas pribadi dengan tiga fitur utama: Focus Timer (pomodoro), To-Do List dengan progress tracker, dan Quick Links. Mengimplementasikan logika interaktif (tambah/edit/hapus tugas, checklist status selesai) menggunakan JavaScript murni (vanilla JS).',
-    tags: ['html', 'CSS', 'Vue.Js'],
+    tags: ['html', 'CSS', 'JavaScript'],
     link: 'https://rosidadewi.github.io/CodingCamp-13July26-rosidadewiutami/',
     type: 'web',
   },
