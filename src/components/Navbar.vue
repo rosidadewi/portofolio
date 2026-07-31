@@ -51,10 +51,10 @@ onUnmounted(() => {
 </script>
 
 <template>
- <header class="fixed top-0 left-0 w-full bg-pink-300/80 backdrop-blur-md z-50 shadow-sm">
+  <header class="fixed top-0 left-0 w-full bg-pink-300/80 backdrop-blur-md z-50 shadow-sm">
     <nav class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
-     <!-- Logo/brand di navbar -->
-<a href="#hero" class="text-xl font-bold text-blue-900 font-montserrat">Portofolio</a>
+      <!-- Logo/brand di navbar -->
+      <a href="#hero" class="text-xl font-bold text-blue-900 font-montserrat">Portofolio</a>
 
       <!-- Menu Desktop -->
       <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -111,7 +111,7 @@ onUnmounted(() => {
           v-for="(item, index) in menu"
           :key="item.href"
           class="menu-item"
-          :style="{ transitionDelay: isOpen ? `${index * 60}ms` : '0ms' }"
+          :style="{ animationDelay: isOpen ? `${index * 60}ms` : '0ms' }"
         >
           <a
             :href="item.href"
@@ -156,11 +156,13 @@ onUnmounted(() => {
 .menu-item {
   opacity: 0;
   transform: translateX(-12px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  animation: menuItemIn 0.35s ease forwards;
 }
-.menu-enter-active .menu-item,
-.menu-enter-to .menu-item {
-  opacity: 1;
-  transform: translateX(0);
+
+@keyframes menuItemIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 </style>
