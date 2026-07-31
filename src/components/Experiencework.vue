@@ -12,7 +12,7 @@ const experiences = [
     company: 'Dinas Komunikasi dan Informatika Kota Madiun',
     period: 'Maret 2025 — April 2025',
     desc: 'Mengembangkan antarmuka sistem informasi kepegawaian untuk instansi Diskominfo Kota Madiun selama masa Praktek Kerja Nyata. Menyusun tampilan halaman menggunakan template Blade (Laravel) yang responsif dan konsisten dengan kebutuhan pengguna instansi.',
-    tags: ['Vue.js', 'Tailwind', 'REST API','Laravel Blade'],
+    tags: ['JavaScript', 'CSS', 'SCSS', 'REST API', 'PHP', 'Laravel Blade'],
   },
   {
     type: 'organisasi',
