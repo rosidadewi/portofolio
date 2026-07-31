@@ -64,9 +64,9 @@ const summaryStats = computed(() => {
 /* Album foto — auto swipe                                             */
 /* ------------------------------------------------------------------ */
 const photos = [
-  { src: '/public/bukti magang 2.jpg', caption: ' Presentasi Project Aplikasi web SIMPEG Non-ASN Diskominfo Kota Madiun' },
-  { src: '/public/bukti magang.jpg', caption: 'Deployment aplikasi di kantor Diskominfo Kota Madiun' },
-  { src: '/public/fosti.jpg', caption: 'Sebagai sekretaris panitia Rapat Pleno 3 FOSTI 2024' },
+  { src: '/bukti magang 2.jpg', caption: ' Presentasi Project Aplikasi web SIMPEG Non-ASN Diskominfo Kota Madiun' },
+  { src: '/bukti magang.jpg', caption: 'Deployment aplikasi di kantor Diskominfo Kota Madiun' },
+  { src: '/fosti.jpg', caption: 'Sebagai sekretaris panitia Rapat Pleno 3 FOSTI 2024' },
 ]
 
 const activeIndex = ref(0)
