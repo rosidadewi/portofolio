@@ -121,8 +121,7 @@ onDeactivated(() => {
           </p>
           <p class="text-gray-600 mb-8 leading-relaxed">
             Saat ini saya fokus memperdalam ekosistem Vue.js, mulai dari
-            component-based architecture, state management dengan Pinia,
-            hingga styling modern menggunakan Tailwind CSS.
+            component-based architecture,hingga styling modern menggunakan Tailwind CSS.
           </p>
 
           <div class="grid grid-cols-3 gap-4">
