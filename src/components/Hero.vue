@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import AnimatedAvatar from './AnimatedAvatar.vue'
 
-const roles = ['Front-End Developer', 'UI/UX Enthusiast']
+const roles = ['Full Stack Developer','Front-End Developer', 'UI/UX Enthusiast']
 const currentRoleIndex = ref(0)
 const displayedRole = ref('')
 let charIndex = 0
