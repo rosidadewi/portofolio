@@ -114,14 +114,11 @@ onDeactivated(() => {
 
         <div>
           <p class="text-gray-600 mb-4 leading-relaxed">
-            Saya adalah seorang front-end developer yang fokus pada pembuatan
-            antarmuka pengguna yang bersih, modern, dan mudah digunakan. Saya
-            senang mempelajari framework baru dan menerapkan praktik terbaik
-            dalam pengembangan web.
-          </p>
-          <p class="text-gray-600 mb-8 leading-relaxed">
-            Saat ini saya fokus memperdalam ekosistem Vue.js, mulai dari
-            component-based architecture,hingga styling modern menggunakan Tailwind CSS.
+            Saya adalah seorang Full-Stack Developer yang berfokus pada pembuatan aplikasi web 
+            yang bersih, modern, dan mudah digunakan, mulai dari sisi antarmuka pengguna (Front-End)
+            hingga logika dan arsitektur di sisi server (Back-End). Saya senang mempelajari framework
+            dan teknologi baru serta menerapkan praktik terbaik dalam pengembangan web secara
+            menyeluruh.
           </p>
 
           <div class="grid grid-cols-3 gap-4">
