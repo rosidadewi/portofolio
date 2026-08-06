@@ -140,12 +140,9 @@ onUnmounted(() => {
           :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
           style="transition-delay: 550ms"
         >
-          Saya membangun aplikasi web secara end-to-end, mulai dari perancangan antarmuka
-          pengguna yang responsif, cepat, dan nyaman dipakai menggunakan HTML & CSS, Tailwind
-          CSS, JavaScript, dan Vue.js, hingga pengembangan sisi server menggunakan Laravel yang
-          terintegrasi dengan database MySQL. Pendekatan ini memungkinkan saya menghadirkan
-          solusi web yang utuh, mulai dari tampilan hingga fungsionalitas di balik layar, sesuai
-          dengan kebutuhan pengguna.
+         Saya membangun aplikasi web end-to-end, mulai dari antarmuka pengguna yang responsif
+         dan nyaman digunakan menggunakan HTML & CSS, Tailwind CSS, JavaScript, dan Vue.js,
+         hingga sisi server menggunakan Laravel dan database MySQL, sesuai kebutuhan pengguna.
         </p>
 
         <div
