@@ -114,10 +114,13 @@ onDeactivated(() => {
 
         <div>
           <p class="text-gray-600 mb-4 leading-relaxed">
-            Saya adalah seorang Full-Stack Developer yang berfokus pada pembuatan aplikasi web 
-            yang bersih, modern, dan mudah digunakan, mulai dari sisi antarmuka pengguna (Front-End)
-            hingga logika dan arsitektur di sisi server (Back-End). Saya senang mempelajari framework
-            dan teknologi baru serta menerapkan praktik terbaik dalam pengembangan web secara
+            Saya adalah seorang Full Stack Developer yang fokus pada pembuatan aplikasi web yang
+            bersih, modern, dan mudah digunakan, mulai dari sisi antarmuka pengguna (front-end)
+            hingga logika dan arsitektur di sisi server (back-end). Saya memiliki pengalaman dalam
+            membangun berbagai aplikasi web menggunakan framework Laravel yang terintegrasi
+            dengan database MySQL, mulai dari perancangan struktur database, pembuatan API,
+            hingga implementasi fitur-fitur kompleks. Saya senang mempelajari framework dan
+            teknologi baru serta menerapkan praktik terbaik dalam pengembangan web secara
             menyeluruh.
           </p>
 
