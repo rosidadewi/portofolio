@@ -1,4 +1,4 @@
-# Vue Portfolio
+# Vue Portofolio
 
 Landing page portofolio pribadi sederhana dibangun dengan **Vue 3 + Vite + Tailwind CSS**.
 
