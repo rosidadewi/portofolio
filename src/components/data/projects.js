@@ -3,7 +3,14 @@ export const projects = [
     title: 'To-Do List App',
     desc: 'Membangun dashboard produktivitas pribadi dengan tiga fitur utama: Focus Timer (pomodoro), To-Do List dengan progress tracker, dan Quick Links. Mengimplementasikan logika interaktif (tambah/edit/hapus tugas, checklist status selesai) menggunakan JavaScript murni (vanilla JS).',
     tags: ['HTML', 'CSS', 'JavaScript'],
-    link: 'https://rosidadewi.github.io/CodingCamp-13July26-rosidadewiutami/',
+    link: 'https://github.com/rosidadewi/CodingCamp-13July26-rosidadewiutami.git',
+    type: 'web',
+  },
+  {
+    title: 'Expense and Budget Visualizer',
+    desc: 'Aplikasi pencatat pengeluaran berbasis web dengan tampilan dark mode yang modern. Pengguna dapat menambahkan pengeluaran lengkap dengan deskripsi, jumlah, kategori, dan tanggal, serta mengelola kategori kustom (tambah, hapus, dan atur limit pengeluaran per kategori).',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+    link: 'https://github.com/rosidadewi/CodingCamp-3August26-rosidadewiutami.git',
     type: 'web',
   },
   {
