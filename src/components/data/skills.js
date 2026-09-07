@@ -1,5 +1,12 @@
 export const skills = [
   {
+    key: 'figma',
+    name: 'Desain UI/UX (Figma)',
+    level: 90,
+    color: '#F24E1E',
+    icon: 'M8 3h4a3 3 0 0 1 0 6H8a3 3 0 0 1 0-6zm0 6h4a3 3 0 0 1 0 6H8a3 3 0 1 1 0-6zm0 6a3 3 0 1 1 3-3',
+  },
+  {
     key: 'html_css',
     name: 'HTML & CSS',
     level: 90,
