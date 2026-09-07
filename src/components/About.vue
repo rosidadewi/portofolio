@@ -114,14 +114,14 @@ onDeactivated(() => {
 
         <div>
           <p class="text-gray-600 mb-4 leading-relaxed">
-            Saya adalah seorang Full Stack Developer yang fokus pada pembuatan aplikasi web yang
-            bersih, modern, dan mudah digunakan, mulai dari sisi antarmuka pengguna (front-end)
-            hingga logika dan arsitektur di sisi server (back-end). Saya memiliki pengalaman dalam
-            membangun berbagai aplikasi web menggunakan framework Laravel yang terintegrasi
-            dengan database MySQL, mulai dari perancangan struktur database, pembuatan API,
-            hingga implementasi fitur-fitur kompleks. Saya senang mempelajari framework dan
-            teknologi baru serta menerapkan praktik terbaik dalam pengembangan web secara
-            menyeluruh.
+            Saya adalah seorang Software Developer dengan fokus pada front-end dan UI/UX, yang
+            senang membangun aplikasi web bersih, modern, dan mudah digunakan. Proses kerja
+            saya dimulai dari riset kebutuhan pengguna dan perancangan antarmuka
+            menggunakan Figma, lalu diimplementasikan menggunakan HTML, CSS, Bootstrap,
+            JavaScript, dan Vue.js, didukung sistem back-end menggunakan Laravel dan
+            MySQL — mulai dari perancangan database, pembuatan API, hingga fitur-fitur
+            kompleks. Saya senang mempelajari teknologi baru serta menerapkan praktik terbaik
+            dalam pengembangan web dan perancangan pengalaman pengguna.
           </p>
 
           <div class="grid grid-cols-3 gap-4">
