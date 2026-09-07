@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import AnimatedAvatar from './AnimatedAvatar.vue'
 
-const roles = ['Full Stack Developer','Front-End Developer', 'UI/UX Enthusiast']
+const roles = ['Front-End Developer', 'UI/UX Enthusiast']
 const currentRoleIndex = ref(0)
 const displayedRole = ref('')
 let charIndex = 0
@@ -19,6 +19,7 @@ const orbitBadges = [
   { name: 'JavaScript', color: '#D97706', icon: 'M8 4l-2 2v12l2 2m8-16l2 2v12l-2 2M10 15c0 1.5 1 2 2 2s2-.5 2-2-1-2-2-2.5-2-1-2-2.5 1-2 2-2 2 .5 2 2', pos: 'badge-tr' },
   { name: 'Vue.js', color: '#059669', icon: 'M3 4h4l5 9 5-9h4L12 20 3 4zm5 0l4 7 4-7', pos: 'badge-bl' },
   { name: 'Tailwind CSS', color: '#0284C7', icon: 'M6 12c1-3 2.5-4.5 6-4.5S16 9 17 12c-1-1.5-2.5-2-4-2-2 0-3 .8-4 2.5C8 15 6.5 16.5 3 16.5c1-1.5 2-3 3-4.5zm6 0c1-3 2.5-4.5 6-4.5S23 9 24 12', pos: 'badge-br' },
+  { name: 'Figma', color: '#F24E1E', icon: 'M8 3h4a3 3 0 0 1 0 6H8a3 3 0 0 1 0-6zm0 6h4a3 3 0 0 1 0 6H8a3 3 0 1 1 0-6zm0 6a3 3 0 1 1 3-3', pos: 'badge-tc' },
 ]
 
 function typeEffect() {
@@ -140,9 +141,11 @@ onUnmounted(() => {
           :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
           style="transition-delay: 550ms"
         >
-         Saya membangun aplikasi web end-to-end, mulai dari antarmuka pengguna yang responsif
-         dan nyaman digunakan menggunakan HTML & CSS, Tailwind CSS, JavaScript, dan Vue.js,
-         hingga sisi server menggunakan Laravel dan database MySQL, sesuai kebutuhan pengguna.
+         Saya merancang dan membangun aplikasi web end-to-end — mulai dari riset
+         kebutuhan pengguna, wireframing, hingga desain antarmuka yang responsif dan
+         intuitif menggunakan HTML, CSS, Tailwind CSS, dan Vue.js — lalu
+         mengimplementasikan sisi server dengan Laravel dan MySQL, sehingga solusi yang
+         dihasilkan selaras antara pengalaman pengguna dan kebutuhan bisnis.
         </p>
 
         <div
