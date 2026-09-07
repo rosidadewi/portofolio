@@ -245,9 +245,21 @@ onUnmounted(() => {
 .badge-bl { bottom: 10%; left: -10%; }
 .badge-br { bottom: 4%; right: -8%; }
 
+/* badge Figma: diposisikan di atas kepala avatar, tengah horizontal */
+.badge-top {
+  top: -6%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 @keyframes badgeFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
+}
+/* varian khusus untuk badge-top agar transform translateY tidak menimpa translateX(-50%) */
+@keyframes badgeFloatCenter {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-8px); }
 }
 .badge {
   animation: badgeFloat 4s ease-in-out infinite;
@@ -255,6 +267,11 @@ onUnmounted(() => {
 .badge-tr { animation-duration: 5s; animation-delay: 0.3s; }
 .badge-bl { animation-duration: 4.5s; animation-delay: 0.6s; }
 .badge-br { animation-duration: 5.5s; animation-delay: 0.9s; }
+.badge-top {
+  animation-name: badgeFloatCenter;
+  animation-duration: 4.8s;
+  animation-delay: 1.2s;
+}
 
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0); opacity: 0.6; }
