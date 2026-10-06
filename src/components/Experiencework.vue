@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted, onUnmounted, onActivated, onDeactivated } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, onActivated, onDeactivated } from 'vue'
 
 /* ------------------------------------------------------------------ */
 /* Data pengalaman kerja & organisasi                                   */
@@ -35,88 +35,69 @@ const experiences = [
 const badgeStyle = {
   kerja: {
     label: 'Kerja',
-    pill: 'bg-blue-100 text-blue-700',
-    iconBg: 'bg-blue-500',
-    accent: 'border-l-blue-500',
-    statIcon: 'bg-blue-100 text-blue-600',
+    pill: 'bg-blue-50 text-blue-700 ring-blue-200',
+    node: 'bg-blue-500',
   },
   organisasi: {
     label: 'Organisasi',
-    pill: 'bg-purple-100 text-purple-700',
-    iconBg: 'bg-purple-500',
-    accent: 'border-l-purple-500',
-    statIcon: 'bg-purple-100 text-purple-600',
+    pill: 'bg-purple-50 text-purple-700 ring-purple-200',
+    node: 'bg-purple-500',
   },
 }
 
-/* Ringkasan singkat untuk mengisi kolom kanan di bawah foto */
-const summaryStats = computed(() => {
-  const kerjaCount = experiences.filter((e) => e.type === 'kerja').length
-  const orgCount = experiences.filter((e) => e.type === 'organisasi').length
-  return [
-    { label: 'Pengalaman Kerja', value: kerjaCount, icon: 'briefcase', style: badgeStyle.kerja.statIcon },
-    { label: 'Pengalaman Organisasi', value: orgCount, icon: 'users', style: badgeStyle.organisasi.statIcon },
-    { label: 'Total Riwayat', value: experiences.length, icon: 'sparkle', style: 'bg-primary-100 text-primary-600' },
-  ]
-})
-
 /* ------------------------------------------------------------------ */
-/* Album foto — auto swipe                                             */
+/* Album foto. Pergantian otomatis digerakkan oleh animasi progress     */
+/* (@animationend), jadi tidak perlu timer terpisah.                    */
+/* File di folder public diakses dari root ("/nama-file"), tanpa "/public" */
 /* ------------------------------------------------------------------ */
 const photos = [
-  { src: '/public/bukti magang 2.jpg', caption: ' Presentasi Project Aplikasi web SIMPEG Non-ASN Diskominfo Kota Madiun' },
-  { src: '/public/bukti magang.jpg', caption: 'Deployment aplikasi di kantor Diskominfo Kota Madiun' },
-  { src: '/public/fosti.jpg', caption: 'Sebagai sekretaris panitia Rapat Pleno 3 FOSTI 2024' },
+  { src: '/bukti magang 2.jpg', caption: 'Presentasi project aplikasi web SIMPEG Non-ASN Diskominfo Kota Madiun' },
+  { src: '/bukti magang.jpg', caption: 'Deployment aplikasi di kantor Diskominfo Kota Madiun' },
+  { src: '/fosti.jpg', caption: 'Sebagai sekretaris panitia Rapat Pleno 3 FOSTI 2024' },
 ]
 
 const activeIndex = ref(0)
 const isPaused = ref(false)
-let autoplayTimer = null
 
 function goTo(index) {
   activeIndex.value = (index + photos.length) % photos.length
 }
-function next() {
-  goTo(activeIndex.value + 1)
-}
-
-function startAutoplay() {
-  stopAutoplay()
-  autoplayTimer = setInterval(() => {
-    if (!isPaused.value) next()
-  }, 3200)
-}
-function stopAutoplay() {
-  if (autoplayTimer) {
-    clearInterval(autoplayTimer)
-    autoplayTimer = null
-  }
-}
+const next = () => goTo(activeIndex.value + 1)
+const prev = () => goTo(activeIndex.value - 1)
 
 /* ------------------------------------------------------------------ */
-/* Reveal animation saat timeline masuk viewport                       */
+/* Reveal item timeline + garis progres mengikuti scroll               */
 /* ------------------------------------------------------------------ */
 const sectionRef = ref(null)
+const listRef = ref(null)
 const visibleItems = reactive(experiences.map(() => false))
+const progress = ref(0) // 0-100
 let observer = null
+let ticking = false
 
-function setupObserver() {
-  const items = sectionRef.value?.querySelectorAll('[data-timeline-item]')
-  if (!items) return
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const idx = Number(entry.target.dataset.timelineItem)
-        if (entry.isIntersecting) {
-          visibleItems[idx] = true
-        }
-      })
-    },
-    { threshold: 0.25 }
-  )
+function updateProgress() {
+  ticking = false
+  const el = listRef.value
+  if (!el) return
+  if (prefersReducedMotion()) {
+    progress.value = 100
+    return
+  }
+  const rect = el.getBoundingClientRect()
+  const trigger = window.innerHeight * 0.65
+  const p = (trigger - rect.top) / rect.height
+  progress.value = Math.min(Math.max(p, 0), 1) * 100
+}
 
-  items.forEach((el) => observer.observe(el))
+function onScroll() {
+  if (!ticking) {
+    ticking = true
+    requestAnimationFrame(updateProgress)
+  }
 }
 
 function destroyObserver() {
@@ -126,214 +107,264 @@ function destroyObserver() {
   }
 }
 
-onMounted(() => {
+function setupObserver() {
+  destroyObserver() // hindari observer ganda (onMounted + onActivated)
+  const items = sectionRef.value?.querySelectorAll('[data-timeline-item]')
+  if (!items) return
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visibleItems[Number(entry.target.dataset.timelineItem)] = true
+        }
+      })
+    },
+    { threshold: 0.2 }
+  )
+  items.forEach((el) => observer.observe(el))
+}
+
+function activate() {
   setupObserver()
-  startAutoplay()
-})
-onUnmounted(() => {
+  window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', onScroll, { passive: true })
+  updateProgress()
+}
+function deactivate() {
   destroyObserver()
-  stopAutoplay()
-})
-onActivated(() => {
-  setupObserver()
-  startAutoplay()
-})
-onDeactivated(() => {
-  destroyObserver()
-  stopAutoplay()
-})
+  window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', onScroll)
+}
+
+onMounted(activate)
+onUnmounted(deactivate)
+onActivated(activate)
+onDeactivated(deactivate)
 </script>
 
 <template>
-  <section id="experiencework" class="relative py-20 px-6 bg-white overflow-hidden" ref="sectionRef">
-    <!-- Dekorasi blob gradien lembut -->
-    <div class="pointer-events-none absolute -top-24 -right-24 w-[26rem] h-[26rem] rounded-full bg-primary-100/60 blur-3xl -z-10"></div>
-    <div class="pointer-events-none absolute -bottom-32 -left-20 w-[22rem] h-[22rem] rounded-full bg-purple-100/50 blur-3xl -z-10"></div>
+  <section
+    id="experiencework"
+    ref="sectionRef"
+    class="relative overflow-hidden bg-white px-6 py-24 md:py-32"
+  >
+    <!-- latar: cahaya lembut -->
+    <div
+      class="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary-100 opacity-70 blur-3xl"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="pointer-events-none absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-purple-100 opacity-50 blur-3xl"
+      aria-hidden="true"
+    ></div>
 
-    <div class="max-w-6xl mx-auto">
-      <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-primary-700 bg-primary-50 border border-primary-100 px-3 py-1 rounded-full mb-3">
-        <span class="w-1.5 h-1.5 rounded-full bg-primary-500"></span>
-        Timeline Perjalanan
-      </span>
-
-      <h2 class="section-title">Pengalaman Kerja & Organisasi</h2>
+    <div class="relative mx-auto max-w-6xl">
+      <h2 class="section-title">Pengalaman Kerja &amp; Organisasi</h2>
       <p class="section-subtitle">
         Perjalanan saya dalam dunia kerja maupun organisasi
       </p>
 
-      <!-- Legenda kategori -->
-      <div class="flex flex-wrap gap-4 mt-6 mb-2">
-        <span class="flex items-center gap-2 text-xs font-medium text-gray-500">
-          <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Pengalaman Kerja
-        </span>
-        <span class="flex items-center gap-2 text-xs font-medium text-gray-500">
-          <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> Pengalaman Organisasi
-        </span>
-      </div>
-
-      <div class="mt-8 grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
+      <div class="mt-16 grid items-start gap-16 lg:grid-cols-5 lg:gap-14">
         <!-- Timeline -->
-        <div class="lg:col-span-3 relative">
-          <div class="absolute left-[13px] top-2 bottom-2 w-px bg-gradient-to-b from-gray-300 via-gray-200 to-transparent"></div>
-
-          <div class="space-y-10">
+        <ol ref="listRef" class="relative lg:col-span-3">
+          <!-- jalur garis -->
+          <div
+            class="absolute bottom-2 left-[13px] top-2 w-0.5 rounded-full bg-gray-200"
+            aria-hidden="true"
+          >
+            <!-- garis yang terisi mengikuti scroll -->
             <div
-              v-for="(exp, index) in experiences"
-              :key="exp.company + exp.period"
-              :data-timeline-item="index"
-              class="relative pl-11 transition-all duration-700 ease-out"
-              :class="visibleItems[index] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'"
-              :style="{ transitionDelay: `${index * 120}ms` }"
-            >
-              <!-- Titik timeline berbentuk ikon -->
-              <span
-                class="absolute left-0 top-0 w-7 h-7 rounded-full flex items-center justify-center text-white ring-4 ring-white shadow-md"
-                :class="badgeStyle[exp.type].iconBg"
-              >
-                <svg v-if="exp.type === 'kerja'" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" />
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-                <svg v-else viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-              </span>
-
-              <div
-                class="group bg-gray-50 hover:bg-white rounded-2xl p-6 transition-all duration-300 border border-gray-100 hover:border-primary-200 border-l-4 hover:shadow-lg hover:-translate-y-0.5"
-                :class="badgeStyle[exp.type].accent"
-              >
-                <div class="flex flex-wrap items-center gap-2 mb-2">
-                  <span
-                    class="text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full"
-                    :class="badgeStyle[exp.type].pill"
-                  >
-                    {{ badgeStyle[exp.type].label }}
-                  </span>
-                  <span
-                    v-if="index === 0"
-                    class="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full"
-                  >
-                    <span class="relative flex h-2 w-2">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    Terbaru
-                  </span>
-                </div>
-
-                <div class="flex flex-wrap items-baseline justify-between gap-2 mb-1">
-                  <h3 class="text-lg font-semibold text-gray-800 group-hover:text-primary-700 transition-colors">
-                    {{ exp.role }}
-                  </h3>
-                  <span class="text-xs font-medium text-primary-600 bg-primary-100 px-2.5 py-1 rounded-full whitespace-nowrap">
-                    {{ exp.period }}
-                  </span>
-                </div>
-                <p class="text-sm font-medium text-gray-500 mb-3">{{ exp.company }}</p>
-                <p class="text-gray-600 text-sm leading-relaxed mb-4">{{ exp.desc }}</p>
-
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    v-for="tag in exp.tags"
-                    :key="tag"
-                    class="text-xs font-medium text-gray-500 bg-white border border-gray-200 rounded-full px-2.5 py-1"
-                  >
-                    {{ tag }}
-                  </span>
-                </div>
-              </div>
-            </div>
+              class="w-full rounded-full bg-gradient-to-b from-primary-500 to-primary-300"
+              :style="{ height: progress + '%' }"
+            ></div>
           </div>
-        </div>
 
-        <!-- Album foto auto-swipe + ringkasan -->
-        <div class="lg:col-span-2 lg:sticky lg:top-24 space-y-6">
-          <div class="relative">
-            <!-- Lapisan foto dekoratif di belakang (efek tumpukan album) -->
-            <div class="hidden sm:block absolute inset-0 rounded-[1.75rem] bg-gray-300/70 rotate-6 scale-[0.96] translate-x-3 translate-y-3 -z-10"></div>
-            <div class="hidden sm:block absolute inset-0 rounded-[1.75rem] bg-gray-200/80 -rotate-3 scale-[0.98] -translate-x-2 translate-y-2 -z-10"></div>
-
-            <!-- Label mengambang -->
-            <div class="absolute -top-3 -left-3 z-10 flex items-center gap-1.5 bg-white text-gray-700 text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-md border border-gray-100">
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary-600">
-                <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-                <circle cx="12" cy="13" r="3" />
-              </svg>
-              Galeri Momen
-            </div>
-
-            <div
-              class="relative rounded-[1.75rem] overflow-hidden shadow-2xl aspect-[4/5] bg-gray-900 group"
-              @mouseenter="isPaused = true"
-              @mouseleave="isPaused = false"
+          <li
+            v-for="(exp, index) in experiences"
+            :key="exp.company + exp.period"
+            :data-timeline-item="index"
+            class="relative pb-8 pl-12 transition-all duration-700 ease-out last:pb-0 motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none"
+            :class="visibleItems[index] ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'"
+            :style="{ transitionDelay: `${index * 100}ms` }"
+          >
+            <!-- titik timeline -->
+            <span
+              class="absolute left-0 top-6 flex h-7 w-7 items-center justify-center rounded-full text-white shadow-md ring-4 ring-white"
+              :class="badgeStyle[exp.type].node"
             >
-              <transition-group name="fade-slide" tag="div" class="absolute inset-0">
-                <img
-                  v-for="(photo, i) in photos"
-                  v-show="i === activeIndex"
-                  :key="photo.src"
-                  :src="photo.src"
-                  :alt="photo.caption"
-                  class="absolute inset-0 w-full h-full object-cover"
-                />
-              </transition-group>
+              <svg
+                v-if="exp.type === 'kerja'"
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="2" y="7" width="20" height="14" rx="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+              </svg>
+              <svg
+                v-else
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </span>
 
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/10 pointer-events-none"></div>
-
-              <div class="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between gap-3">
-                <p class="text-white text-sm font-medium leading-snug drop-shadow-sm">
-                  {{ photos[activeIndex].caption }}
-                </p>
-                <span class="shrink-0 text-[11px] font-semibold text-white/90 bg-white/15 backdrop-blur-sm rounded-full px-2.5 py-1 tabular-nums">
-                  {{ activeIndex + 1 }} / {{ photos.length }}
+            <article
+              class="group relative rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl md:p-7"
+            >
+              <div class="flex flex-wrap items-center gap-2">
+                <span
+                  class="rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1"
+                  :class="badgeStyle[exp.type].pill"
+                >
+                  {{ badgeStyle[exp.type].label }}
+                </span>
+                <span
+                  v-if="index === 0"
+                  class="flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200"
+                >
+                  <span class="relative flex h-1.5 w-1.5">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                  </span>
+                  Terbaru
                 </span>
               </div>
 
-              <div class="absolute top-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+              <h3 class="mt-4 text-xl font-bold tracking-tight text-gray-900 md:text-2xl">
+                {{ exp.role }}
+              </h3>
+              <p class="mt-1 font-medium text-primary-700">{{ exp.company }}</p>
+
+              <p class="mt-3 inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1 text-xs font-medium tabular-nums text-gray-600">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" />
+                  <path d="M16 2v4M8 2v4M3 10h18" />
+                </svg>
+                {{ exp.period }}
+              </p>
+
+              <p class="mt-4 text-sm leading-relaxed text-gray-600 md:text-base">
+                {{ exp.desc }}
+              </p>
+
+              <ul class="mt-5 flex flex-wrap gap-2">
+                <li
+                  v-for="tag in exp.tags"
+                  :key="tag"
+                  class="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-gray-600 transition hover:border-primary-300 hover:bg-primary-50 hover:text-primary-700"
+                >
+                  {{ tag }}
+                </li>
+              </ul>
+            </article>
+          </li>
+        </ol>
+
+        <!-- Galeri + ringkasan -->
+        <div class="space-y-6 lg:sticky lg:top-24 lg:col-span-2">
+          <div class="relative mx-auto max-w-sm lg:max-w-none">
+            <!-- latar gradien miring, senada dengan bagian Tentang Saya -->
+            <div
+              class="absolute inset-0 rotate-3 rounded-[2rem] bg-gradient-to-br from-primary-400 via-primary-500 to-primary-700"
+              aria-hidden="true"
+            ></div>
+
+            <div
+              class="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-gray-900 shadow-2xl ring-4 ring-white"
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Galeri momen"
+              @mouseenter="isPaused = true"
+              @mouseleave="isPaused = false"
+              @focusin="isPaused = true"
+              @focusout="isPaused = false"
+            >
+              <transition name="fade-zoom">
+                <img
+                  :key="photos[activeIndex].src"
+                  :src="photos[activeIndex].src"
+                  :alt="photos[activeIndex].caption"
+                  class="absolute inset-0 h-full w-full object-cover"
+                />
+              </transition>
+
+              <div
+                class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"
+                aria-hidden="true"
+              ></div>
+
+              <!-- indikator gaya story: segmen terisi sesuai waktu tayang -->
+              <div class="absolute inset-x-5 top-3 flex gap-1.5">
                 <button
                   v-for="(photo, i) in photos"
-                  :key="'dot-' + photo.src"
-                  @click="goTo(i)"
-                  class="h-1.5 rounded-full transition-all duration-300"
-                  :class="i === activeIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/70'"
+                  :key="'seg-' + photo.src"
+                  type="button"
+                  class="group/seg flex-1 py-2 focus:outline-none"
                   :aria-label="`Ke foto ${i + 1}`"
-                ></button>
+                  :aria-current="i === activeIndex ? 'true' : undefined"
+                  @click="goTo(i)"
+                >
+                  <span class="relative block h-1 overflow-hidden rounded-full bg-white/30 group-focus-visible/seg:ring-2 group-focus-visible/seg:ring-white">
+                    <span v-if="i < activeIndex" key="done" class="absolute inset-0 bg-white"></span>
+                    <span
+                      v-else-if="i === activeIndex"
+                      :key="'bar-' + activeIndex"
+                      class="story-bar absolute inset-0 origin-left bg-white"
+                      :style="{ animationPlayState: isPaused ? 'paused' : 'running' }"
+                      @animationend="next"
+                    ></span>
+                  </span>
+                </button>
+              </div>
+
+              <!-- panah -->
+              <button
+                type="button"
+                class="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition hover:bg-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                aria-label="Foto sebelumnya"
+                :class="isPaused ? 'translate-x-0 opacity-100' : '-translate-x-2 opacity-0'"
+                @click="prev"
+              >
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+              </button>
+              <button
+                type="button"
+                class="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition hover:bg-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                aria-label="Foto berikutnya"
+                :class="isPaused ? 'translate-x-0 opacity-100' : 'translate-x-2 opacity-0'"
+                @click="next"
+              >
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6" /></svg>
+              </button>
+
+              <!-- keterangan dalam panel kaca -->
+              <div class="absolute inset-x-4 bottom-4 rounded-2xl border border-white/20 bg-black/30 p-4 backdrop-blur-md">
+                <p class="text-sm font-medium leading-snug text-white">
+                  {{ photos[activeIndex].caption }}
+                </p>
               </div>
             </div>
           </div>
 
-          <p class="text-center text-xs text-gray-400">
-            Momen keseharian di balik layar pekerjaan & organisasi
-          </p>
-
-          <!-- Kartu ringkasan statistik -->
-          <div class="bg-gray-50 border border-gray-100 rounded-2xl p-5 grid grid-cols-3 gap-3">
-            <div v-for="stat in summaryStats" :key="stat.label" class="flex flex-col items-center text-center gap-2">
-              <span class="w-9 h-9 rounded-full flex items-center justify-center" :class="stat.style">
-                <svg v-if="stat.icon === 'briefcase'" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="7" width="20" height="14" rx="2" />
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-                <svg v-else-if="stat.icon === 'users'" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-                <svg v-else viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
-                </svg>
-              </span>
-              <div>
-                <p class="text-xl font-bold text-gray-800 tabular-nums leading-none">{{ stat.value }}</p>
-                <p class="text-[10.5px] text-gray-500 leading-snug mt-1">{{ stat.label }}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -341,22 +372,36 @@ onDeactivated(() => {
 </template>
 
 <style scoped>
-.fade-slide-enter-active,
-.fade-slide-leave-active {
-  transition: opacity 0.7s ease, transform 0.7s ease;
+/* transisi pergantian foto */
+.fade-zoom-enter-active,
+.fade-zoom-leave-active {
+  transition: opacity 0.8s ease, transform 1.2s ease;
 }
-.fade-slide-enter-from {
+.fade-zoom-enter-from {
   opacity: 0;
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
-.fade-slide-leave-to {
+.fade-zoom-leave-to {
   opacity: 0;
 }
 
+/* progress segmen aktif: saat selesai, memicu foto berikutnya */
+@keyframes story {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.story-bar {
+  animation: story 4s linear forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .fade-slide-enter-active,
-  .fade-slide-leave-active {
+  .fade-zoom-enter-active,
+  .fade-zoom-leave-active {
     transition: none;
+  }
+  /* tanpa autoplay: segmen aktif langsung penuh, foto diganti manual */
+  .story-bar {
+    animation: none;
   }
   .animate-ping {
     animation: none;

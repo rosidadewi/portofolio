@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import AnimatedAvatar from './AnimatedAvatar.vue'
 
-const roles = ['Front-End Developer', 'UI/UX Enthusiast']
+const roles = ['Software Developer', 'UI/UX Enthusiast']
 const currentRoleIndex = ref(0)
 const displayedRole = ref('')
 let charIndex = 0
@@ -12,14 +12,6 @@ let timeoutId = null
 const isLoaded = ref(false)
 const sectionRef = ref(null)
 let observer = null
-
-// badge teknologi kecil yang mengambang di sekitar avatar
-const orbitBadges = [
-  { name: 'HTML & CSS', color: '#2563EB', icon: 'M4 3h16l-1.5 15L12 21l-6.5-3L4 3zm4 6h8m-8 4h6', pos: 'badge-tl' },
-  { name: 'JavaScript', color: '#D97706', icon: 'M8 4l-2 2v12l2 2m8-16l2 2v12l-2 2M10 15c0 1.5 1 2 2 2s2-.5 2-2-1-2-2-2.5-2-1-2-2.5 1-2 2-2 2 .5 2 2', pos: 'badge-tr' },
-  { name: 'Vue.js', color: '#059669', icon: 'M3 4h4l5 9 5-9h4L12 20 3 4zm5 0l4 7 4-7', pos: 'badge-bl' },
-  { name: 'Tailwind CSS', color: '#0284C7', icon: 'M6 12c1-3 2.5-4.5 6-4.5S16 9 17 12c-1-1.5-2.5-2-4-2-2 0-3 .8-4 2.5C8 15 6.5 16.5 3 16.5c1-1.5 2-3 3-4.5zm6 0c1-3 2.5-4.5 6-4.5S23 9 24 12', pos: 'badge-br' },
-]
 
 function typeEffect() {
   const fullText = roles[currentRoleIndex.value]
@@ -140,8 +132,7 @@ onUnmounted(() => {
           :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
           style="transition-delay: 550ms"
         >
-          Saya membangun antarmuka web yang responsif, cepat, dan nyaman dipakai
-          menggunakan HTML & CSS, Tailwind CSS, JavaScript maupun Vue.Js sesuai dengan kebutuhan pengguna.
+          
         </p>
 
         <div
@@ -172,19 +163,6 @@ onUnmounted(() => {
       >
         <div class="relative mx-auto max-w-sm">
           <AnimatedAvatar />
-
-          <div
-            v-for="(badge, i) in orbitBadges"
-            :key="badge.name"
-            class="badge absolute hidden sm:flex items-center gap-2 px-3 py-2 rounded-2xl bg-white shadow-lg shadow-gray-900/5 border border-gray-100 transition-all duration-700 ease-out"
-            :class="[badge.pos, isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-50']"
-            :style="{ transitionDelay: `${850 + i * 120}ms`, '--accent': badge.color }"
-          >
-            <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path :d="badge.icon" />
-            </svg>
-            <span class="text-xs font-semibold text-gray-700 whitespace-nowrap">{{ badge.name }}</span>
-          </div>
         </div>
       </div>
 
@@ -235,23 +213,6 @@ onUnmounted(() => {
   mask-image: radial-gradient(ellipse 65% 55% at 50% 40%, black 30%, transparent 85%);
 }
 
-/* posisi badge mengambang di sekitar avatar */
-.badge-tl { top: 4%; left: -8%; }
-.badge-tr { top: 8%; right: -10%; }
-.badge-bl { bottom: 10%; left: -10%; }
-.badge-br { bottom: 4%; right: -8%; }
-
-@keyframes badgeFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-.badge {
-  animation: badgeFloat 4s ease-in-out infinite;
-}
-.badge-tr { animation-duration: 5s; animation-delay: 0.3s; }
-.badge-bl { animation-duration: 4.5s; animation-delay: 0.6s; }
-.badge-br { animation-duration: 5.5s; animation-delay: 0.9s; }
-
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0); opacity: 0.6; }
   50% { transform: translateY(6px); opacity: 1; }
@@ -264,7 +225,6 @@ onUnmounted(() => {
   .blob-float-1,
   .blob-float-2,
   .blob-float-3,
-  .badge,
   .scroll-bounce {
     animation: none !important;
   }
