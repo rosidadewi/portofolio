@@ -13,18 +13,6 @@ const isLoaded = ref(false)
 const sectionRef = ref(null)
 let observer = null
 
-<<<<<<< HEAD
-=======
-// badge teknologi kecil yang mengambang di sekitar avatar
-const orbitBadges = [
-  { name: 'HTML & CSS', color: '#2563EB', icon: 'M4 3h16l-1.5 15L12 21l-6.5-3L4 3zm4 6h8m-8 4h6', pos: 'badge-tl' },
-  { name: 'JavaScript', color: '#D97706', icon: 'M8 4l-2 2v12l2 2m8-16l2 2v12l-2 2M10 15c0 1.5 1 2 2 2s2-.5 2-2-1-2-2-2.5-2-1-2-2.5 1-2 2-2 2 .5 2 2', pos: 'badge-tr' },
-  { name: 'Vue.js', color: '#059669', icon: 'M3 4h4l5 9 5-9h4L12 20 3 4zm5 0l4 7 4-7', pos: 'badge-bl' },
-  { name: 'Tailwind CSS', color: '#0284C7', icon: 'M6 12c1-3 2.5-4.5 6-4.5S16 9 17 12c-1-1.5-2.5-2-4-2-2 0-3 .8-4 2.5C8 15 6.5 16.5 3 16.5c1-1.5 2-3 3-4.5zm6 0c1-3 2.5-4.5 6-4.5S23 9 24 12', pos: 'badge-br' },
-  { name: 'Figma', color: '#F24E1E', icon: 'M8 3h4a3 3 0 0 1 0 6H8a3 3 0 0 1 0-6zm0 6h4a3 3 0 0 1 0 6H8a3 3 0 1 1 0-6zm0 6a3 3 0 1 1 3-3', pos: 'badge-top' },
-]
-
->>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
 function typeEffect() {
   const fullText = roles[currentRoleIndex.value]
 
@@ -144,16 +132,12 @@ onUnmounted(() => {
           :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
           style="transition-delay: 550ms"
         >
-<<<<<<< HEAD
-          
-=======
          Saya merancang dan membangun aplikasi web end-to-end — mulai dari riset
          kebutuhan pengguna, wireframing, hingga desain antarmuka menggunakan Figma
          yang kemudian diimplementasikan menjadi tampilan responsif dan intuitif
          menggunakan HTML, CSS, Tailwind CSS, dan Vue.js — lalu mengimplementasikan sisi
          server dengan Laravel dan MySQL, sehingga solusi yang dihasilkan selaras antara
          pengalaman pengguna dan kebutuhan bisnis.
->>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
         </p>
 
         <div
@@ -234,43 +218,6 @@ onUnmounted(() => {
   mask-image: radial-gradient(ellipse 65% 55% at 50% 40%, black 30%, transparent 85%);
 }
 
-<<<<<<< HEAD
-=======
-/* posisi badge mengambang di sekitar avatar */
-.badge-tl { top: 4%; left: -8%; }
-.badge-tr { top: 8%; right: -10%; }
-.badge-bl { bottom: 10%; left: -10%; }
-.badge-br { bottom: 4%; right: -8%; }
-
-/* badge Figma: diposisikan di atas kepala avatar, tengah horizontal */
-.badge-top {
-  top: -6%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-@keyframes badgeFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-/* varian khusus untuk badge-top agar transform translateY tidak menimpa translateX(-50%) */
-@keyframes badgeFloatCenter {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-8px); }
-}
-.badge {
-  animation: badgeFloat 4s ease-in-out infinite;
-}
-.badge-tr { animation-duration: 5s; animation-delay: 0.3s; }
-.badge-bl { animation-duration: 4.5s; animation-delay: 0.6s; }
-.badge-br { animation-duration: 5.5s; animation-delay: 0.9s; }
-.badge-top {
-  animation-name: badgeFloatCenter;
-  animation-duration: 4.8s;
-  animation-delay: 1.2s;
-}
-
->>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0); opacity: 0.6; }
   50% { transform: translateY(6px); opacity: 1; }
