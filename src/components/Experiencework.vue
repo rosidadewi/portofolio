@@ -51,15 +51,9 @@ const badgeStyle = {
 /* File di folder public diakses dari root ("/nama-file"), tanpa "/public" */
 /* ------------------------------------------------------------------ */
 const photos = [
-<<<<<<< HEAD
   { src: '/bukti magang 2.jpg', caption: 'Presentasi project aplikasi web SIMPEG Non-ASN Diskominfo Kota Madiun' },
   { src: '/bukti magang.jpg', caption: 'Deployment aplikasi di kantor Diskominfo Kota Madiun' },
   { src: '/fosti.jpg', caption: 'Sebagai sekretaris panitia Rapat Pleno 3 FOSTI 2024' },
-=======
-  { src: '/bukti magang 2.jpg', caption: ' Presentasi Project Aplikasi web SIMPEG Non-ASN Diskominfo Kota Madiun' },
-  { src: '/bukti magang.jpg', caption: 'Deployment aplikasi di kantor Diskominfo Kota Madiun' },
-  { src: '/fosti.jpg', caption: 'Sekretaris Rapat Pleno FOSTI 2024' },
->>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
 ]
 
 const activeIndex = ref(0)

@@ -197,7 +197,6 @@ onDeactivated(destroyObserver)
           </div>
         </div>
 
-<<<<<<< HEAD
         <!-- Konten -->
         <div
           class="transition-all delay-150 duration-700 ease-out motion-reduce:transition-none md:col-span-7"
@@ -214,18 +213,6 @@ onDeactivated(destroyObserver)
             lalu mewujudkannya menjadi aplikasi web maupun Android yang utuh.
             Saya senang mempelajari teknologi baru dan menerapkan praktik
             terbaik dalam pengembangan web.
-=======
-        <div>
-          <p class="text-gray-600 mb-4 leading-relaxed">
-            Saya adalah seorang Software Developer dengan fokus pada front-end dan UI/UX, yang
-            senang membangun aplikasi web bersih, modern, dan mudah digunakan. Proses kerja
-            saya dimulai dari riset kebutuhan pengguna dan perancangan antarmuka
-            menggunakan Figma, lalu diimplementasikan menggunakan HTML, CSS, Bootstrap,
-            JavaScript, dan Vue.js, didukung sistem back-end menggunakan Laravel dan
-            MySQL — mulai dari perancangan database, pembuatan API, hingga fitur-fitur
-            kompleks. Saya senang mempelajari teknologi baru serta menerapkan praktik terbaik
-            dalam pengembangan web dan perancangan pengalaman pengguna.
->>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
           </p>
 
           <!-- Area fokus -->
@@ -301,7 +288,6 @@ onDeactivated(destroyObserver)
     </div>
   </section>
 </template>
-<<<<<<< HEAD
 
 <style scoped>
 /* lencana melayang pelan */
@@ -340,5 +326,3 @@ onDeactivated(destroyObserver)
   }
 }
 </style>
-=======
->>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
