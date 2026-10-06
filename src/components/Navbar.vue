@@ -117,6 +117,7 @@ onUnmounted(() => {
 </script>
 
 <template>
+<<<<<<< HEAD
   <header class="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-3 md:pt-4">
     <!-- Garis progres baca -->
     <div
@@ -124,6 +125,12 @@ onUnmounted(() => {
       :style="{ transform: `scaleX(${progress})` }"
       aria-hidden="true"
     ></div>
+=======
+  <header class="fixed top-0 left-0 w-full bg-pink-300/80 backdrop-blur-md z-50 shadow-sm">
+    <nav class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+      <!-- Logo/brand di navbar -->
+      <a href="#hero" class="text-xl font-bold text-blue-900 font-montserrat">Portofolio</a>
+>>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
 
     <!-- Latar redup di belakang menu mobile; klik untuk menutup -->
     <transition name="fade">
@@ -191,6 +198,7 @@ onUnmounted(() => {
           </li>
         </ul>
 
+<<<<<<< HEAD
         <div class="flex items-center gap-1">
           <!-- Hamburger mobile -->
           <button
@@ -200,6 +208,47 @@ onUnmounted(() => {
             aria-controls="mobile-menu"
             aria-label="Buka atau tutup menu"
             @click="isOpen = !isOpen"
+=======
+      <!-- Tombol Hamburger Mobile -->
+      <button
+        class="md:hidden flex flex-col gap-1.5 p-2"
+        @click="isOpen = !isOpen"
+        aria-label="Toggle menu"
+      >
+        <span
+          class="w-6 h-0.5 bg-gray-800 transition-all duration-300 origin-center"
+          :class="{ 'rotate-45 translate-y-2': isOpen }"
+        ></span>
+        <span
+          class="w-6 h-0.5 bg-gray-800 transition-all duration-300"
+          :class="{ 'opacity-0 scale-0': isOpen }"
+        ></span>
+        <span
+          class="w-6 h-0.5 bg-gray-800 transition-all duration-300 origin-center"
+          :class="{ '-rotate-45 -translate-y-2': isOpen }"
+        ></span>
+      </button>
+    </nav>
+
+    <!-- Menu Mobile -->
+    <transition name="menu">
+      <ul v-if="isOpen" class="md:hidden flex flex-col gap-1 px-6 pb-6 bg-white/95">
+        <li
+          v-for="(item, index) in menu"
+          :key="item.href"
+          class="menu-item"
+          :style="{ animationDelay: isOpen ? `${index * 60}ms` : '0ms' }"
+        >
+          <a
+            :href="item.href"
+            class="flex items-center gap-2 py-2.5 font-medium transition-all duration-300"
+            :class="
+              activeSection === item.href
+                ? 'text-primary-600 font-semibold pl-2'
+                : 'text-gray-600 hover:text-primary-600 hover:pl-2'
+            "
+            @click="closeMenu"
+>>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
           >
             <span
               class="h-0.5 w-5 origin-center rounded-full bg-gray-800 transition-all duration-300"
@@ -308,14 +357,22 @@ onUnmounted(() => {
 /* Item muncul satu-satu */
 .menu-item {
   opacity: 0;
+<<<<<<< HEAD
   transform: translateX(-10px);
   animation: menuItemIn 0.3s ease forwards;
 }
+=======
+  transform: translateX(-12px);
+  animation: menuItemIn 0.35s ease forwards;
+}
+
+>>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
 @keyframes menuItemIn {
   to {
     opacity: 1;
     transform: translateX(0);
   }
+<<<<<<< HEAD
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -337,5 +394,7 @@ onUnmounted(() => {
     opacity: 1;
     transform: none;
   }
+=======
+>>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
 }
 </style>

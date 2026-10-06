@@ -12,7 +12,7 @@ const experiences = [
     company: 'Dinas Komunikasi dan Informatika Kota Madiun',
     period: 'Maret 2025 — April 2025',
     desc: 'Mengembangkan antarmuka sistem informasi kepegawaian untuk instansi Diskominfo Kota Madiun selama masa Praktek Kerja Nyata. Menyusun tampilan halaman menggunakan template Blade (Laravel) yang responsif dan konsisten dengan kebutuhan pengguna instansi.',
-    tags: ['Vue.js', 'Tailwind', 'REST API', 'Laravel Blade'],
+    tags: ['JavaScript', 'CSS', 'SCSS', 'REST API', 'PHP', 'Laravel Blade'],
   },
   {
     type: 'organisasi',
@@ -51,9 +51,15 @@ const badgeStyle = {
 /* File di folder public diakses dari root ("/nama-file"), tanpa "/public" */
 /* ------------------------------------------------------------------ */
 const photos = [
+<<<<<<< HEAD
   { src: '/bukti magang 2.jpg', caption: 'Presentasi project aplikasi web SIMPEG Non-ASN Diskominfo Kota Madiun' },
   { src: '/bukti magang.jpg', caption: 'Deployment aplikasi di kantor Diskominfo Kota Madiun' },
   { src: '/fosti.jpg', caption: 'Sebagai sekretaris panitia Rapat Pleno 3 FOSTI 2024' },
+=======
+  { src: '/bukti magang 2.jpg', caption: ' Presentasi Project Aplikasi web SIMPEG Non-ASN Diskominfo Kota Madiun' },
+  { src: '/bukti magang.jpg', caption: 'Deployment aplikasi di kantor Diskominfo Kota Madiun' },
+  { src: '/fosti.jpg', caption: 'Sekretaris Rapat Pleno FOSTI 2024' },
+>>>>>>> a9132c1f4ec41569b5fb607e4111cf15dea2f9df
 ]
 
 const activeIndex = ref(0)
