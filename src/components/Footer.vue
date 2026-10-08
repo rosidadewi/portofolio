@@ -78,28 +78,105 @@ function scrollToTop() {
 
         <!-- pemisah + kembali ke atas -->
         <span class="mx-1 hidden h-5 w-px bg-white/10 sm:block" aria-hidden="true"></span>
-        <button
-          type="button"
-          aria-label="Kembali ke atas"
-          title="Kembali ke atas"
-          class="flex h-9 w-9 items-center justify-center rounded-full text-gray-400 ring-1 ring-white/10 transition duration-200 hover:-translate-y-0.5 hover:bg-primary-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-          @click="scrollToTop"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="h-4 w-4"
-            aria-hidden="true"
+
+        <!-- pembungkus: cahaya komet melingkari tombol -->
+        <span class="top-glow relative flex h-9 w-9 items-center justify-center transition duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+          <!-- halo blur yang bernapas -->
+          <span class="glow-halo pointer-events-none absolute -inset-[4px] overflow-hidden rounded-full" aria-hidden="true">
+            <span class="glow-spin"></span>
+          </span>
+
+          <!-- garis cahaya tipis dengan komet yang berputar -->
+          <span class="glow-ring pointer-events-none absolute -inset-[3px] rounded-full" aria-hidden="true">
+            <span class="glow-spin"></span>
+          </span>
+
+          <button
+            type="button"
+            aria-label="Kembali ke atas"
+            title="Kembali ke atas"
+            class="relative z-10 flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 text-gray-300 ring-1 ring-white/10 transition duration-200 hover:bg-primary-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 motion-reduce:transition-none"
+            @click="scrollToTop"
           >
-            <path d="M12 19V5M5 12l7-7 7 7" />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+              aria-hidden="true"
+            >
+              <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+          </button>
+        </span>
       </div>
     </div>
   </footer>
 </template>
+
+<style scoped>
+/* ---------- Cahaya melingkar tombol: komet cyan > indigo > fuchsia ---------- */
+.glow-spin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 200%; /* cukup besar untuk menutup lingkaran saat berputar */
+  aspect-ratio: 1 / 1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 52%,
+    rgba(34, 211, 238, 0.9) 68%,
+    rgba(99, 102, 241, 1) 84%,
+    rgba(232, 121, 249, 1) 96%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: glowSpin 4s linear infinite;
+  will-change: transform;
+}
+@keyframes glowSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Garis tipis: hanya tepinya yang terlihat berkat mask */
+.glow-ring {
+  padding: 1.5px;
+  overflow: hidden;
+  background: rgba(129, 140, 248, 0.22); /* garis dasar yang redup */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+/* Halo blur: bernapas pelan, lebih terang saat di-hover */
+.glow-halo {
+  filter: blur(7px);
+  opacity: 0.5;
+  animation: glowBreath 4s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+.top-glow:hover .glow-halo {
+  opacity: 0.95;
+}
+@keyframes glowBreath {
+  0%, 100% { opacity: 0.35; transform: scale(0.98); }
+  50% { opacity: 0.7; transform: scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-spin,
+  .glow-halo {
+    animation: none;
+  }
+  .glow-halo {
+    transition: none;
+  }
+}
+</style>
