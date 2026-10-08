@@ -102,10 +102,6 @@ onDeactivated(() => {
     <div class="pointer-events-none absolute inset-0 -z-10 aurora"></div>
 
     <div class="max-w-5xl mx-auto">
-      <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-primary-700 bg-primary-50 border border-primary-100 px-3 py-1 rounded-full mb-4">
-        <span class="w-1.5 h-1.5 rounded-full bg-primary-500"></span>
-        Kemampuan
-      </span>
 
       <h2 class="section-title">Skill &amp; Teknologi</h2>
       <p class="section-subtitle max-w-2xl">
