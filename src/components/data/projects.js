@@ -28,8 +28,15 @@ export const projects = [
     type: 'web',
   },
   {
+    title: 'Portofolio',
+    desc: 'Website landing page portofolio pribadi yang dirancang untuk memperkenalkan profil dan menampilkan hasil karya secara profesional. Dilengkapi tampilan responsif, navigasi yang mudah, serta pengalaman pengguna yang optimal di berbagai perangkat.',
+    tags: ['HTML', 'Tailwind CSS', 'CSS', 'Vue.js'],
+    link: 'https://github.com/rosidadewi/landingpage_jeruk-62',
+    type: 'web',
+  },
+  {
     title: 'Landing Page Jeruk +62',
-    desc: 'Merancang landing page untuk usaha jeruk peras sunkist guna memperkenalkan produk dan layanan kepada pelanggan. Menyusun tampilan halaman yang menarik dan informatif untuk mendukung kebutuhan promosi usaha.',
+    desc: 'Merancang dan membangun landing page untuk usaha jeruk peras sunkist guna memperkenalkan produk dan layanan kepada pelanggan. Menyusun tampilan halaman yang menarik dan informatif untuk mendukung kebutuhan promosi usaha.',
     tags: ['HTML', 'Tailwind CSS', 'CSS', 'Laravel Blade'],
     link: 'https://github.com/rosidadewi/landingpage_jeruk-62',
     type: 'web',
