@@ -30,8 +30,8 @@ export const projects = [
   {
     title: 'Portofolio',
     desc: 'Website landing page portofolio pribadi yang dirancang untuk memperkenalkan profil dan menampilkan hasil karya secara profesional. Dilengkapi tampilan responsif, navigasi yang mudah, serta pengalaman pengguna yang optimal di berbagai perangkat.',
-    tags: ['HTML', 'Tailwind CSS', 'CSS', 'Vue.js'],
-    link: 'https://github.com/rosidadewi/landingpage_jeruk-62',
+    tags: ['Vue 3', 'Tailwind CSS', 'JavaScript', 'CSS', 'Web3Forms API'],
+    link: 'https://codebyrosida.netlify.app/',
     type: 'web',
   },
   {
