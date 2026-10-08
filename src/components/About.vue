@@ -51,6 +51,21 @@ const tools = [
 ]
 const marqueeItems = [...tools, ...tools]
 
+// Gugusan bintang: posisi (%), ukuran (px), warna, delay & durasi kedip
+// Warna memakai hex langsung (bukan class Tailwind) agar pasti tampil berwarna
+const stars = [
+  { x: 6, y: 10, size: 26, color: '#22d3ee', delay: 0, dur: 3.4 },
+  { x: 38, y: 2, size: 12, color: '#e879f9', delay: -1.1, dur: 2.8 },
+  { x: 62, y: 18, size: 18, color: '#818cf8', delay: -2.2, dur: 3.9 },
+  { x: 20, y: 42, size: 14, color: '#a78bfa', delay: -0.6, dur: 3.1 },
+  { x: 48, y: 36, size: 8, color: '#67e8f9', delay: -1.8, dur: 2.5 },
+  { x: 2, y: 68, size: 10, color: '#f0abfc', delay: -2.6, dur: 3.6 },
+  { x: 34, y: 66, size: 20, color: '#6366f1', delay: -0.3, dur: 4.1 },
+  { x: 74, y: 52, size: 9, color: '#c084fc', delay: -1.5, dur: 2.9 },
+  { x: 58, y: 80, size: 13, color: '#22d3ee', delay: -2.9, dur: 3.3 },
+  { x: 14, y: 88, size: 7, color: '#e879f9', delay: -0.9, dur: 2.7 },
+]
+
 const displayValues = ref(stats.value.map(() => 0))
 const sectionRef = ref(null)
 const revealed = ref(false) // animasi masuk, hanya sekali
@@ -159,25 +174,89 @@ onDeactivated(destroyObserver)
           :class="revealed ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'"
         >
           <div class="group relative mx-auto max-w-sm md:max-w-none">
-            <!-- pola titik -->
+            <!-- gugusan bintang aesthetic -->
             <div
-              class="absolute -left-6 -top-6 h-32 w-32 text-primary-300"
-              style="background-image: radial-gradient(currentColor 1.5px, transparent 1.5px); background-size: 14px 14px;"
+              class="pointer-events-none absolute -left-10 -top-10 h-40 w-40"
+              aria-hidden="true"
+            >
+              <svg
+                v-for="(s, i) in stars"
+                :key="i"
+                class="star-twinkle absolute"
+                :style="{
+                  '--c': s.color,
+                  color: s.color,
+                  left: s.x + '%',
+                  top: s.y + '%',
+                  width: s.size + 'px',
+                  height: s.size + 'px',
+                  animationDelay: s.delay + 's',
+                  animationDuration: s.dur + 's',
+                }"
+                viewBox="0 0 24 24"
+                :fill="s.color"
+              >
+                <path d="M12 0c.8 6.2 5.8 11.2 12 12-6.2.8-11.2 5.8-12 12-.8-6.2-5.8-11.2-12-12 6.2-.8 11.2-5.8 12-12Z" />
+              </svg>
+            </div>
+
+            <!-- latar gradien miring (dibuat lebih lembut) -->
+            <div
+              class="absolute inset-0 rotate-6 rounded-t-full rounded-b-3xl bg-gradient-to-br from-primary-300 via-primary-400 to-primary-600 opacity-80 transition-transform duration-500 group-hover:rotate-3"
               aria-hidden="true"
             ></div>
 
-            <!-- latar gradien miring -->
+            <!-- Halo blur yang "bernapas": cahaya menyebar keluar bingkai -->
             <div
-              class="absolute inset-0 rotate-6 rounded-t-full rounded-b-3xl bg-gradient-to-br from-primary-400 via-primary-500 to-primary-700 transition-transform duration-500 group-hover:rotate-3"
+              class="photo-halo pointer-events-none absolute -inset-[14px] overflow-hidden rounded-t-full rounded-b-[2.6rem]"
+              aria-hidden="true"
+            >
+              <span class="photo-spin"></span>
+            </div>
+
+            <!-- Pelat putih: jeda bersih antara foto dan garis cahaya -->
+            <div
+              class="pointer-events-none absolute -inset-[9px] rounded-t-full rounded-b-[33px] bg-white shadow-[0_20px_50px_-15px_rgba(15,23,42,0.35)]"
               aria-hidden="true"
             ></div>
+
+            <!-- Garis cahaya tipis dengan komet yang berputar -->
+            <div class="photo-ring pointer-events-none absolute -inset-[9px] rounded-t-full rounded-b-[33px]" aria-hidden="true">
+              <span class="photo-spin"></span>
+            </div>
 
             <img
               src="/foto-profil.png"
               alt="Foto Rosida Dewi Utami"
-              class="relative aspect-[4/5] w-full rounded-t-full rounded-b-3xl object-cover shadow-2xl ring-4 ring-white"
+              class="relative aspect-[4/5] w-full rounded-t-full rounded-b-3xl object-cover"
               loading="lazy"
             />
+
+            <!-- percikan bintang -->
+            <svg
+              class="sparkle absolute -right-4 top-10 h-6 w-6 text-cyan-400 sm:-right-8"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M12 0c.8 6.2 5.8 11.2 12 12-6.2.8-11.2 5.8-12 12-.8-6.2-5.8-11.2-12-12 6.2-.8 11.2-5.8 12-12Z" />
+            </svg>
+            <svg
+              class="sparkle sparkle-2 absolute -left-5 bottom-24 h-4 w-4 text-fuchsia-400 sm:-left-9"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M12 0c.8 6.2 5.8 11.2 12 12-6.2.8-11.2 5.8-12 12-.8-6.2-5.8-11.2-12-12 6.2-.8 11.2-5.8 12-12Z" />
+            </svg>
+            <svg
+              class="sparkle sparkle-3 absolute right-6 -top-6 h-3.5 w-3.5 text-indigo-400"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M12 0c.8 6.2 5.8 11.2 12 12-6.2.8-11.2 5.8-12 12-.8-6.2-5.8-11.2-12-12 6.2-.8 11.2-5.8 12-12Z" />
+            </svg>
 
             <!-- lencana atas (melayang pelan) -->
             <div
@@ -302,6 +381,84 @@ onDeactivated(destroyObserver)
   animation-delay: -2.5s;
 }
 
+/* ---------- Gugusan bintang kelap-kelip ---------- */
+.star-twinkle {
+  filter: drop-shadow(0 0 5px var(--c));
+  animation: starTwinkle 3.4s ease-in-out infinite;
+}
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.5) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(90deg); }
+}
+
+/* ---------- Cahaya bingkai foto: komet cyan > indigo > fuchsia ---------- */
+.photo-spin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 230%; /* cukup besar untuk menutup bingkai 4:5 saat berputar */
+  aspect-ratio: 1 / 1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 52%,
+    rgba(34, 211, 238, 0.9) 68%,
+    rgba(99, 102, 241, 1) 84%,
+    rgba(232, 121, 249, 1) 96%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: photoSpin 7s linear infinite;
+  will-change: transform;
+}
+@keyframes photoSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Garis tipis: hanya tepinya yang terlihat berkat mask */
+.photo-ring {
+  padding: 1.5px;
+  overflow: hidden;
+  background: rgba(129, 140, 248, 0.22); /* garis dasar yang redup */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+/* Halo blur: bernapas pelan, lebih terang saat di-hover */
+.photo-halo {
+  filter: blur(22px);
+  opacity: 0.45;
+  animation: haloBreath 5s ease-in-out infinite;
+  transition: opacity 0.4s ease;
+}
+.group:hover .photo-halo {
+  opacity: 0.9;
+  animation-play-state: paused;
+}
+@keyframes haloBreath {
+  0%, 100% { opacity: 0.35; transform: scale(0.99); }
+  50% { opacity: 0.65; transform: scale(1.02); }
+}
+
+/* Percikan bintang berkedip */
+.sparkle {
+  animation: twinkle 3.6s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+.sparkle-2 {
+  animation-delay: -1.2s;
+}
+.sparkle-3 {
+  animation-delay: -2.4s;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.6) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(45deg); }
+}
+
 /* marquee: bergeser setengah lebar (satu set daftar) lalu mengulang */
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -321,8 +478,21 @@ onDeactivated(destroyObserver)
 
 @media (prefers-reduced-motion: reduce) {
   .badge-float,
-  .marquee-track {
+  .marquee-track,
+  .photo-spin,
+  .photo-halo {
     animation: none;
+  }
+  .sparkle {
+    animation: none;
+    opacity: 0.8;
+  }
+  .star-twinkle {
+    animation: none;
+    opacity: 0.7;
+  }
+  .photo-halo {
+    transition: none;
   }
 }
 </style>
