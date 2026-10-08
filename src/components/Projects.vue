@@ -158,7 +158,7 @@ function getCardStyle(index) {
             Proyek Saya
           </h2>
           <p class="mt-3 text-base leading-relaxed text-gray-600 md:text-lg">
-            Beberapa proyek yang pernah saya kerjakan untuk belajar dan latihan.
+            Beberapa proyek yang pernah saya kerjakan.
           </p>
         </div>
 
