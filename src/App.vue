@@ -7,6 +7,7 @@ import Experiencework from './components/Experiencework.vue'
 import Projects from './components/Projects.vue'
 import Contact from './components/Contact.vue'
 import Footer from './components/Footer.vue'
+import BackToTop from './components/BackToTop.vue'
 
 </script>
 
@@ -20,5 +21,6 @@ import Footer from './components/Footer.vue'
     <Projects />
     <Contact />
     <Footer />
+    <BackToTop />
   </div>
 </template>
