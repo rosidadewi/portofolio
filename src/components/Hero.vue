@@ -141,22 +141,80 @@ onUnmounted(() => {
         </p>
 
         <div
-          class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start transition-all duration-700 ease-out"
+          class="flex flex-col sm:flex-row items-center gap-5 sm:gap-6 justify-center md:justify-start transition-all duration-700 ease-out"
           :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
           style="transition-delay: 700ms"
         >
 
-          <a href="#projects" class="btn-primary relative overflow-hidden group inline-flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-primary-300/50 hover:-translate-y-0.5 active:translate-y-0">
-            <span class="relative z-10">Lihat Proyek</span>
-            <svg class="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14m-6-6l6 6-6 6" />
-            </svg>
-            <span class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></span>
-          </a>
+          <!-- Tombol utama + cahaya melingkar -->
+          <div class="glow-wrap relative isolate w-full rounded-full sm:w-auto">
+            <!-- Halo blur yang menyebar keluar -->
+            <span class="glow-halo pointer-events-none absolute -inset-[4px] -z-10 overflow-hidden rounded-full" aria-hidden="true">
+              <span class="glow-spin"></span>
+            </span>
+            <!-- Garis cahaya tipis di tepi -->
+            <span class="pointer-events-none absolute -inset-px -z-10 overflow-hidden rounded-full" aria-hidden="true">
+              <span class="glow-spin"></span>
+            </span>
 
-          <a href="#contact" class="btn-outline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0">
-            Hubungi Saya
-          </a>
+            <a
+              href="#projects"
+              class="group relative inline-flex h-[52px] w-full sm:w-auto items-center justify-center gap-4 overflow-hidden rounded-full bg-gradient-to-b from-indigo-500 to-violet-600 pl-7 pr-1.5 text-[15px] font-semibold tracking-wide text-white shadow-lg shadow-indigo-500/30 ring-1 ring-inset ring-white/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-indigo-500/40 active:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2"
+            >
+              <span class="relative z-10">Lihat Proyek</span>
+              <span
+                class="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 ring-1 ring-inset ring-white/30 transition-colors duration-300 group-hover:bg-white group-hover:text-indigo-700"
+              >
+                <svg
+                  class="h-4 w-4 transition-transform duration-300 group-hover:-rotate-45"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14m-6-6l6 6-6 6" />
+                </svg>
+              </span>
+              <!-- Kilau -->
+              <span
+                class="pointer-events-none absolute inset-y-0 left-0 w-1/3 -translate-x-full -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[420%] motion-reduce:hidden"
+                aria-hidden="true"
+              ></span>
+            </a>
+          </div>
+
+          <!-- Tombol kedua + cahaya melingkar -->
+          <div class="glow-wrap relative isolate w-full rounded-full sm:w-auto">
+            <span class="glow-halo pointer-events-none absolute -inset-[4px] -z-10 overflow-hidden rounded-full" aria-hidden="true">
+              <span class="glow-spin glow-spin-reverse"></span>
+            </span>
+            <span class="pointer-events-none absolute -inset-px -z-10 overflow-hidden rounded-full" aria-hidden="true">
+              <span class="glow-spin glow-spin-reverse"></span>
+            </span>
+
+            <a
+              href="#contact"
+              class="group inline-flex h-[52px] w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-white px-7 text-[15px] font-semibold tracking-wide text-gray-800 transition-all duration-300 hover:-translate-y-0.5 hover:text-indigo-700 hover:shadow-lg hover:shadow-indigo-200/50 active:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2"
+            >
+              <svg
+                class="h-[18px] w-[18px] text-gray-400 transition-all duration-300 group-hover:-rotate-6 group-hover:scale-110 group-hover:text-indigo-500"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="2.5" />
+                <path d="m3.5 7 8.5 6 8.5-6" />
+              </svg>
+              Hubungi Saya
+            </a>
+          </div>
 
         </div>
       </div>
@@ -226,11 +284,52 @@ onUnmounted(() => {
   animation: scrollBounce 1.8s ease-in-out infinite;
 }
 
+/* ---------- Cahaya melingkar di sekitar tombol (warna sama dengan navbar) ---------- */
+.glow-spin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 170%;
+  aspect-ratio: 1 / 1;
+  background: conic-gradient(
+    from 0deg,
+    rgba(34, 211, 238, 0.9),
+    rgba(99, 102, 241, 0.9),
+    rgba(232, 121, 249, 0.9),
+    rgba(99, 102, 241, 0.9),
+    rgba(34, 211, 238, 0.9)
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: glowSpin 6s linear infinite;
+  will-change: transform;
+}
+.glow-spin-reverse {
+  animation-direction: reverse;
+  animation-duration: 8s;
+}
+@keyframes glowSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Halo blur: cahaya menyebar keluar dari tepi tombol */
+.glow-halo {
+  filter: blur(10px);
+  opacity: 0.55;
+  transition: opacity 0.35s ease;
+}
+.glow-wrap:hover .glow-halo,
+.glow-wrap:focus-within .glow-halo {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .blob-float-1,
   .blob-float-2,
   .blob-float-3,
-  .scroll-bounce {
+  .scroll-bounce,
+  .glow-spin {
     animation: none !important;
   }
 }
