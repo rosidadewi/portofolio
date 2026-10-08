@@ -28,11 +28,6 @@ const socials = [
     hover: 'hover:bg-[#25D366] hover:text-white',
   },
 ]
-
-function scrollToTop() {
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
-}
 </script>
 
 <template>
@@ -75,108 +70,7 @@ function scrollToTop() {
             <path d="M17.47 14.38c-.29-.15-1.73-.85-2-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.15-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.49.1-.19.05-.36-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.5-.66-.5-.17 0-.36-.02-.56-.02-.19 0-.51.07-.78.36-.27.29-1.02 1-1.02 2.44s1.04 2.83 1.19 3.02c.15.19 2.05 3.13 4.97 4.39.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.11.55-.08 1.73-.71 1.98-1.39.24-.68.24-1.27.17-1.39-.07-.12-.27-.19-.56-.34ZM12.04 22c-1.66 0-3.28-.43-4.7-1.24l-3.36.88.9-3.28a10.05 10.05 0 0 1-1.36-5.03C3.52 7.9 7.4 4 12.04 4c2.25 0 4.36.88 5.95 2.47a8.39 8.39 0 0 1 2.46 5.94c0 4.63-3.88 8.5-8.41 8.5Zm7.24-15.7A10.5 10.5 0 0 0 12.04 3C6.27 3 1.58 7.68 1.58 13.45c0 1.82.48 3.6 1.38 5.16L1.5 23l4.51-1.18a10.44 10.44 0 0 0 5.98 1.86h.01c5.78 0 10.47-4.68 10.47-10.45a10.4 10.4 0 0 0-3.19-7.43Z"/>
           </svg>
         </a>
-
-        <!-- pemisah + kembali ke atas -->
-        <span class="mx-1 hidden h-5 w-px bg-white/10 sm:block" aria-hidden="true"></span>
-
-        <!-- pembungkus: cahaya komet melingkari tombol -->
-        <span class="top-glow relative flex h-9 w-9 items-center justify-center transition duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-          <!-- halo blur yang bernapas -->
-          <span class="glow-halo pointer-events-none absolute -inset-[4px] overflow-hidden rounded-full" aria-hidden="true">
-            <span class="glow-spin"></span>
-          </span>
-
-          <!-- garis cahaya tipis dengan komet yang berputar -->
-          <span class="glow-ring pointer-events-none absolute -inset-[3px] rounded-full" aria-hidden="true">
-            <span class="glow-spin"></span>
-          </span>
-
-          <button
-            type="button"
-            aria-label="Kembali ke atas"
-            title="Kembali ke atas"
-            class="relative z-10 flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 text-gray-300 ring-1 ring-white/10 transition duration-200 hover:bg-primary-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300 motion-reduce:transition-none"
-            @click="scrollToTop"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-4 w-4"
-              aria-hidden="true"
-            >
-              <path d="M12 19V5M5 12l7-7 7 7" />
-            </svg>
-          </button>
-        </span>
       </div>
     </div>
   </footer>
 </template>
-
-<style scoped>
-/* ---------- Cahaya melingkar tombol: komet cyan > indigo > fuchsia ---------- */
-.glow-spin {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 200%; /* cukup besar untuk menutup lingkaran saat berputar */
-  aspect-ratio: 1 / 1;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    transparent 52%,
-    rgba(34, 211, 238, 0.9) 68%,
-    rgba(99, 102, 241, 1) 84%,
-    rgba(232, 121, 249, 1) 96%,
-    transparent 100%
-  );
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation: glowSpin 4s linear infinite;
-  will-change: transform;
-}
-@keyframes glowSpin {
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-/* Garis tipis: hanya tepinya yang terlihat berkat mask */
-.glow-ring {
-  padding: 1.5px;
-  overflow: hidden;
-  background: rgba(129, 140, 248, 0.22); /* garis dasar yang redup */
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-}
-
-/* Halo blur: bernapas pelan, lebih terang saat di-hover */
-.glow-halo {
-  filter: blur(7px);
-  opacity: 0.5;
-  animation: glowBreath 4s ease-in-out infinite;
-  transition: opacity 0.3s ease;
-}
-.top-glow:hover .glow-halo {
-  opacity: 0.95;
-}
-@keyframes glowBreath {
-  0%, 100% { opacity: 0.35; transform: scale(0.98); }
-  50% { opacity: 0.7; transform: scale(1.04); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .glow-spin,
-  .glow-halo {
-    animation: none;
-  }
-  .glow-halo {
-    transition: none;
-  }
-}
-</style>
