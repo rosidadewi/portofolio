@@ -288,10 +288,9 @@ onDeactivated(destroyObserver)
           </h3>
 
           <p class="mt-6 max-w-prose text-lg leading-relaxed text-gray-600">
-            Saya mulai dari riset kebutuhan pengguna dan perancangan antarmuka,
-            lalu mewujudkannya menjadi aplikasi web maupun Android yang utuh.
-            Saya senang mempelajari teknologi baru dan menerapkan praktik
-            terbaik dalam pengembangan web.
+            Saya merancang dan membangun aplikasi web maupun Android, mulai dari riset pengguna 
+            dan desain antarmuka hingga produk jadi. Saya selalu terbuka mempelajari teknologi baru 
+            dan menerapkan praktik terbaik.
           </p>
 
           <!-- Area fokus -->
