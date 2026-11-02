@@ -17,7 +17,7 @@ export const projects = [
     title: 'SIMPEG Non-ASN Diskominfo Kota Madiun',
     desc: 'Mengembangkan antarmuka sistem informasi kepegawaian untuk instansi Diskominfo Kota Madiun selama masa PKN. Menyusun tampilan halaman menggunakan template Blade (Laravel) yang responsif dan konsisten dengan kebutuhan pengguna instansi.',
     tags: ['HTML', 'CSS', 'Tailwind CSS', 'Laravel Blade'],
-    link: 'https://github.com/rosidadewi/SIMPEG_DiskominfoKotaMadiun.git',
+    link: 'https://github.com/rosidadewi/SIMPEG_Diskominfo_Madiun.git',
     type: 'web',
   },
   {
