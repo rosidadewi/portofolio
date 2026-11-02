@@ -132,12 +132,6 @@ onUnmounted(() => {
           :class="isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
           style="transition-delay: 550ms"
         >
-         Saya merancang dan membangun aplikasi web end-to-end — mulai dari riset
-         kebutuhan pengguna, wireframing, hingga desain antarmuka menggunakan Figma
-         yang kemudian diimplementasikan menjadi tampilan responsif dan intuitif
-         menggunakan HTML, CSS, Tailwind CSS, dan Vue.js — lalu mengimplementasikan sisi
-         server dengan Laravel dan MySQL, sehingga solusi yang dihasilkan selaras antara
-         pengalaman pengguna dan kebutuhan bisnis.
         </p>
 
         <div
