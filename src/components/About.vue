@@ -16,7 +16,7 @@ const stats = computed(() => [
 const focusAreas = [
   {
     title: 'Desain UI/UX',
-    desc: 'Riset pengguna dan prototipe di Figma',
+    desc: 'Riset pengguna dan prototype di Figma',
     icon: 'M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.586 7.586M11 13a2 2 0 100-4 2 2 0 000 4z',
   },
   {
@@ -26,7 +26,7 @@ const focusAreas = [
   },
   {
     title: 'Back-end',
-    desc: 'Laravel Blade dan database SQLite',
+    desc: 'Framework Laravel, database MySQL untuk aplikasi web dan database SQLite untuk aplikasi Android',
     icon: 'M3 5c0-1.1 4-2 9-2s9 .9 9 2-4 2-9 2-9-.9-9-2zM3 5v14c0 1.1 4 2 9 2s9-.9 9-2V5M3 12c0 1.1 4 2 9 2s9-.9 9-2',
   },
   {
