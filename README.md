@@ -10,3 +10,5 @@ Landing page portofolio pribadi sederhana dibangun dengan **Vue 3 + Vite + Tailw
 - `Projects.vue` — grid kartu proyek
 - `Contact.vue` — form kontak (v-model + reactive state)
 - `Footer.vue` — footer dengan link sosial media
+
+link demo : codebyrosida.netlify.app
